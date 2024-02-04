@@ -1,17 +1,28 @@
 # Lo-Fi Piano Patch/Preset/Sample Pack.
-This repository consists of an all around breaking-out of a custom sound I've designed to emulate the sound of a piano being played off of a warbled
-tape cassette using my Korg Monologue.  As an example of getting the most out of my hardware, I'm attempting to create a soundfont using Polyphone to
-get around the monophonic limitations of the Monologue by sampling its own sound and triggering these samples with the Monologue using MIDI.
+This is a little piano sound patch I noodled off of my magic Korg Monologue, probably pretty useful for making lo-fi stuff.  
+
+Currently a work in progress as I get better at managing my time between work and practice and projects, but I digress.
+
+For me, I intend to use the soundfont as a way to get around the monophonic limitations of the Monologue by sampling it's own sound and then using it to trigger said sound off a computer using MIDI.
 
 
-## Sampling Proccess
-The first step is to record a complete range of 85 notes of varying lengthto give the patch a _responsive_ feel by allocating for velocity.  The Monologue's
-keyboard recognizes __six__ varying levels of velocity to simulate __how hard__ the key is being hit; for our purposes we will record six tracks of
-the complete 85 note range, each with a different `decay` parameter applied to each of the notes for a gradient of short to long notes.
+## Considerations
+The Monologue is monophonic, but it's a great MIDI controller and even greater piece of sound design equipment; for starters it has six key `velocity tracking` channels, meaning each key is sensitive to how hard they're being hit.  
 
-The result is a set of 85 keys that ring out depending on how hard they're hit.  With each key having six different ways to be played, in all the
-system has 510 different sounds it can make.  That being said; as of initial uploading the individual notes have not been sliced into their appropriate
-sample files.
+I want this set to use the `velocity` tracking to indicate `decay`; the harder the key is hit the longer the note will play out.  
+
+So that means that for each of the 72 notes being recorded six different versions must be produced, each with a longer `decay` time than the last and bringing the total sample count up to 432 distinct sounds to be processed.
+
+
+## The Sampling Proccess
+I use Audacity for recording and editing sound.  In the `sample-tracks.aup3` file temporarily included in the repository, we have recorded the full range of keys for every step on the `decay` parameter into their own channels.
+
+These channels then have a Noise Gate applied with a reduction of -100dB and then detached along silences.  Then, each and every note in the project is selected and then normalized.
+
+After slicing and normalizing, the next step is labelling each note in step from E2 through E7 along with an extension denoting it's `velocity` channel.  The nomenclature goes like: `E1.V1::E7.V6`.  
+Once the notes have been labeled, we export as multiple`.ogg` files based on labels.  
+
+It's important to remember to only do one track at a time because exporting like this is a multi-track, time-based thing so if you leave two tracks in muted then you may end up with a sound file with parts of two notes.
 
 
 ## Soundfont Tuning
